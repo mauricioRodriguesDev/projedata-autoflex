@@ -1,6 +1,7 @@
 package com.projedata.autoflex.controller;
 
 import com.projedata.autoflex.business.dto.ProductDto;
+import com.projedata.autoflex.business.dto.ProductionSuggestionDto;
 import com.projedata.autoflex.business.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,12 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+
+    @GetMapping("/production-suggestion")
+    public ResponseEntity<ProductionSuggestionDto.Response> getProductionSuggestion() {
+        ProductionSuggestionDto.Response suggestion = productService.getProductionSuggestion();
+        return ResponseEntity.ok(suggestion);
+    }
 
     @PostMapping
     public ResponseEntity<ProductDto.Response> createProduct(@Valid @RequestBody ProductDto.Request request) {
