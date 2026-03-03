@@ -14,7 +14,6 @@ public interface ProductMapper {
     @Mapping(target = "composition", ignore = true)
     Product toEntity(ProductDto.Request request);
 
-    // MapStruct will automatically use the method below to map the composition set
     ProductDto.Response toResponse(Product product);
 
     @Mapping(source = "rawMaterial.id", target = "rawMaterialId")
