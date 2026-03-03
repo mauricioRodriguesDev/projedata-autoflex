@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import RawMaterialsPage from './pages/RawMaterialsPage';
+import ProductsPage from './pages/ProductsPage';
 
 function App() {
   return (
@@ -15,14 +16,16 @@ function App() {
             <li>
               <Link to="/raw-materials">Raw Materials</Link>
             </li>
-            {/* Outros links virão aqui */}
+            <li>
+              <Link to="/products">Products</Link>
+            </li>
           </ul>
         </nav>
         <main>
           <Routes>
             <Route path="/" element={<div>Página Inicial</div>} />
             <Route path="/raw-materials" element={<RawMaterialsPage />} />
-            {/* Outras rotas virão aqui */}
+            <Route path="/products" element={<ProductsPage />} />
           </Routes>
         </main>
       </div>
