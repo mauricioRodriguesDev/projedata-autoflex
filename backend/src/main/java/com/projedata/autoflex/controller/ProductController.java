@@ -2,9 +2,11 @@ package com.projedata.autoflex.controller;
 
 import com.projedata.autoflex.business.dto.ProductDto;
 import com.projedata.autoflex.business.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -17,9 +19,11 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ProductDto.Response> createProduct(@RequestBody ProductDto.Request request) {
+    public ResponseEntity<ProductDto.Response> createProduct(@Valid @RequestBody ProductDto.Request request) {
         ProductDto.Response createdProduct = productService.create(request);
-        return ResponseEntity.created(URI.create("/api/products/" + createdProduct.id())).body(createdProduct);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(createdProduct.id()).toUri();
+        return ResponseEntity.created(uri).body(createdProduct);
     }
 
     @GetMapping
@@ -35,7 +39,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto.Response> updateProduct(@PathVariable Long id, @RequestBody ProductDto.Request request) {
+    public ResponseEntity<ProductDto.Response> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto.Request request) {
         ProductDto.Response updatedProduct = productService.update(id, request);
         return ResponseEntity.ok(updatedProduct);
     }

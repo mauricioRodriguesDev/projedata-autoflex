@@ -3,6 +3,7 @@ package com.projedata.autoflex.business.service;
 import com.projedata.autoflex.business.dto.RawMaterialDto;
 import com.projedata.autoflex.business.mapper.RawMaterialMapper;
 import com.projedata.autoflex.infrastructure.entity.RawMaterial;
+import com.projedata.autoflex.infrastructure.exception.ResourceNotFoundException;
 import com.projedata.autoflex.infrastructure.repository.RawMaterialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,13 +37,13 @@ public class RawMaterialService {
     public RawMaterialDto.RawMaterialResponse findById(Long id) {
         return rawMaterialRepository.findById(id)
                 .map(rawMaterialMapper::toResponse)
-                .orElseThrow(() -> new RuntimeException("RawMaterial not found with id: " + id)); // TODO: Create a custom exception
+                .orElseThrow(() -> new ResourceNotFoundException("RawMaterial not found with id: " + id));
     }
 
     @Transactional
     public RawMaterialDto.RawMaterialResponse update(Long id, RawMaterialDto.RawMaterialRequest request) {
         RawMaterial rawMaterial = rawMaterialRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("RawMaterial not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("RawMaterial not found with id: " + id));
 
         rawMaterial.setName(request.name());
         rawMaterial.setStockQuantity(request.stockQuantity());
@@ -53,9 +54,8 @@ public class RawMaterialService {
 
     @Transactional
     public void delete(Long id) {
-        if (!rawMaterialRepository.existsById(id)) {
-            throw new RuntimeException("RawMaterial not found with id: " + id);
-        }
-        rawMaterialRepository.deleteById(id);
+        RawMaterial rawMaterial = rawMaterialRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("RawMaterial not found with id: " + id));
+        rawMaterialRepository.delete(rawMaterial);
     }
 }
