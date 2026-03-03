@@ -1,4 +1,4 @@
-import { Product, ProductRequest } from '../types/entities';
+import { Product, ProductRequest, ProductionSuggestion } from '../types/entities';
 import api from './api';
 
 export const getProducts = async (): Promise<Product[]> => {
@@ -18,4 +18,9 @@ export const updateProduct = async (id: number, request: ProductRequest): Promis
 
 export const deleteProduct = async (id: number): Promise<void> => {
   await api.delete(`/products/${id}`);
+};
+
+export const getProductionSuggestion = async (): Promise<ProductionSuggestion> => {
+  const { data } = await api.get('/products/production-suggestion');
+  return data;
 };

@@ -19,6 +19,17 @@ export interface Product {
   composition: CompositionItem[];
 }
 
+export interface ProductionSuggestion {
+  suggestedProducts: {
+    productId: number;
+    productName: string;
+    quantityProducible: number;
+    unitPrice: number;
+    totalValue: number;
+  }[];
+  totalObtainableValue: number;
+}
+
 // Tipos para os DTOs de Requisição
 export type RawMaterialRequest = Omit<RawMaterial, 'id'>;
 export type ProductRequest = Omit<Product, 'id' | 'composition'> & {

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import RawMaterialsPage from './pages/RawMaterialsPage';
 import ProductsPage from './pages/ProductsPage';
+import ProductionSuggestionPage from './pages/ProductionSuggestionPage';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
             <li>
               <Link to="/products">Products</Link>
             </li>
+            <li>
+              <Link to="/production-suggestion">Production Suggestion</Link>
+            </li>
           </ul>
         </nav>
         <main>
@@ -26,6 +30,7 @@ function App() {
             <Route path="/" element={<div>Página Inicial</div>} />
             <Route path="/raw-materials" element={<RawMaterialsPage />} />
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/production-suggestion" element={<ProductionSuggestionPage />} />
           </Routes>
         </main>
       </div>
