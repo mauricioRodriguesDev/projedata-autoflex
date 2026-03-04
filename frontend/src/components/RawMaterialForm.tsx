@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { RawMaterial, RawMaterialRequest } from '../types/entities';
+import { Button, FormGroup, Input } from '../styles/components';
 
 interface RawMaterialFormProps {
   onSubmit: SubmitHandler<RawMaterialRequest>;
@@ -15,17 +16,17 @@ const RawMaterialForm: React.FC<RawMaterialFormProps> = ({ onSubmit, initialData
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+      <FormGroup>
         <label htmlFor="name">Name:</label>
-        <input
+        <Input
           id="name"
           {...register('name', { required: 'Name is required' })}
         />
         {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
-      </div>
-      <div>
+      </FormGroup>
+      <FormGroup>
         <label htmlFor="stockQuantity">Stock Quantity:</label>
-        <input
+        <Input
           id="stockQuantity"
           type="number"
           {...register('stockQuantity', {
@@ -35,10 +36,10 @@ const RawMaterialForm: React.FC<RawMaterialFormProps> = ({ onSubmit, initialData
           })}
         />
         {errors.stockQuantity && <p style={{ color: 'red' }}>{errors.stockQuantity.message}</p>}
-      </div>
-      <button type="submit" disabled={isLoading}>
+      </FormGroup>
+      <Button type="submit" disabled={isLoading}>
         {isLoading ? 'Saving...' : 'Save'}
-      </button>
+      </Button>
     </form>
   );
 };
