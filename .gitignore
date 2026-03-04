@@ -1,0 +1,17 @@
+# IDE configuration files
+/.idea/
+
+# Build output
+/backend/target/
+/frontend/build/
+/frontend/dist/
+
+# Dependency directories
+/node_modules/
+
+# Log files
+*.log
+
+# Local env files
+.env.local
+.env.*.local
