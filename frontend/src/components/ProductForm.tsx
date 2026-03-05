@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm, useFieldArray, SubmitHandler, Controller } from 'react-hook-form';
 import { Product, ProductRequest, RawMaterial } from '../types/entities';
 import { getRawMaterials } from '../services/rawMaterialService';
+import { Button, FormGroup, Input, Select } from '../styles/components';
 
 interface ProductFormProps {
   onSubmit: SubmitHandler<ProductRequest>;
@@ -38,59 +39,57 @@ const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, initialData, isLoad
   });
 
   useEffect(() => {
-    // Fetch all raw materials to populate the dropdown
     getRawMaterials().then(setAvailableMaterials);
   }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit as SubmitHandler<FormValues>)}>
-      {/* Name and Price Fields */}
-      <div>
+      <FormGroup>
         <label>Name:</label>
-        <input {...register('name', { required: 'Name is required' })} />
+        <Input {...register('name', { required: 'Name is required' })} />
         {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
-      </div>
-      <div>
+      </FormGroup>
+      <FormGroup>
         <label>Price:</label>
-        <input type="number" step="0.01" {...register('price', { required: 'Price is required', valueAsNumber: true, min: { value: 0.01, message: 'Price must be positive' } })} />
+        <Input type="number" step="0.01" {...register('price', { required: 'Price is required', valueAsNumber: true, min: { value: 0.01, message: 'Price must be positive' } })} />
         {errors.price && <p style={{ color: 'red' }}>{errors.price.message}</p>}
-      </div>
+      </FormGroup>
 
-      {/* Composition Fields */}
       <h3>Composition</h3>
       <ul>
         {fields.map((item, index) => (
-          <li key={item.id}>
+          <li key={item.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
             <Controller
               name={`composition.${index}.rawMaterialId`}
               control={control}
-              rules={{ required: 'Material is required' }}
+              rules={{ required: 'Material is required', min: { value: 1, message: 'Please select a material' } }}
               render={({ field }) => (
-                <select {...field}>
-                  <option value="">Select Material</option>
+                <Select {...field} >
+                  <option value={0}>Select Material</option>
                   {availableMaterials.map(m => (
                     <option key={m.id} value={m.id}>{m.name}</option>
                   ))}
-                </select>
+                </Select>
               )}
             />
-            <input
+            <Input
               type="number"
+              style={{ marginLeft: '0.5rem', width: '100px' }}
               {...register(`composition.${index}.quantityNeeded`, { required: 'Qty is required', valueAsNumber: true, min: { value: 1, message: 'Must be > 0' } })}
               placeholder="Quantity"
             />
-            <button type="button" onClick={() => remove(index)}>Remove</button>
+            <Button type="button" onClick={() => remove(index)} style={{ marginLeft: '0.5rem' }}>Remove</Button>
           </li>
         ))}
       </ul>
-      <button type="button" onClick={() => append({ rawMaterialId: 0, quantityNeeded: 1 })}>
+      <Button type="button" onClick={() => append({ rawMaterialId: 0, quantityNeeded: 1 })}>
         Add Composition Item
-      </button>
+      </Button>
 
-      <hr />
-      <button type="submit" disabled={isLoading}>
+      <hr style={{ margin: '1.5rem 0' }} />
+      <Button type="submit" disabled={isLoading}>
         {isLoading ? 'Saving...' : 'Save Product'}
-      </button>
+      </Button>
     </form>
   );
 };

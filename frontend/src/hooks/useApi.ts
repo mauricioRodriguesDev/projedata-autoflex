@@ -7,7 +7,6 @@ interface UseApiResult<T> {
   fetchData: () => void;
 }
 
-// Este hook recebe uma função que retorna uma Promise (nossa função de serviço)
 export function useApi<T>(apiFunc: () => Promise<T>): UseApiResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
