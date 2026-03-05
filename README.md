@@ -58,3 +58,6 @@ After starting both servers, the application will be available at `http://localh
 - **Robust API**: Includes custom exception handling (404, 409, 400) and DTO validation.
 - **Responsive Frontend**: A user-friendly interface that works on both desktop and mobile devices.
 - **Clean Architecture**: Both backend and frontend follow a layered and scalable structure.
+
+
+Autor: [mauricioRodriguesDev](https://github.com/mauricioRodriguesDev)

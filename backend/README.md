@@ -36,11 +36,11 @@ Before you begin, ensure you have the following installed:
     ```
 
 2.  **Configure the Database:**
-    - In PostgreSQL, create a new, empty database named `autoflex`.
+    - In PostgreSQL, create a new, empty database named `db_autoflex`.
     - Open the configuration file at `src/main/resources/application.properties`.
     - Update the following lines with your local PostgreSQL credentials:
       ```properties
-      spring.datasource.url=jdbc:postgresql://localhost:5432/autoflex
+      spring.datasource.url=jdbc:postgresql://localhost:5432/db_autoflex
       spring.datasource.username=your_username_here
       spring.datasource.password=your_password_here
       ```
